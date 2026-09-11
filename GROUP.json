@@ -1,0 +1,29 @@
+{
+  "group_id": "g01",
+  "anchor": "d4df5e1b0b1c643fe0fc521add0236764ec8e92a",
+  "anchor_instance": "django__django-11119",
+  "span_commits": 84,
+  "size": 11,
+  "django_version": "3.0",
+  "environment_setup_commit": "419a78300f7cd27611196e1e464d50fd0385ff27",
+  "verified": {
+    "unsolved_at_anchor": 11,
+    "leaked": 0,
+    "drifted": 0,
+    "method": "exact two-way git apply --check of each official patch at the anchor",
+    "date": "2026-09-10"
+  },
+  "problems": [
+    {"instance_id": "django__django-11119", "base_commit": "d4df5e1b0b1c643fe0fc521add0236764ec8e92a", "rank_offset": 0, "difficulty": "<15 min fix"},
+    {"instance_id": "django__django-11133", "base_commit": "879cc3da6249e920b8d54518a0ae06de835d7373", "rank_offset": 23, "difficulty": "<15 min fix"},
+    {"instance_id": "django__django-11149", "base_commit": "e245046bb6e8b32360aa48b8a41fb7050f0fc730", "rank_offset": 34, "difficulty": "15 min - 1 hour"},
+    {"instance_id": "django__django-11163", "base_commit": "e6588aa4e793b7f56f4cadbfa155b581e0efc59a", "rank_offset": 46, "difficulty": "<15 min fix"},
+    {"instance_id": "django__django-11138", "base_commit": "c84b91b7603e488f7171fdff8f08368ef3d6b856", "rank_offset": 57, "difficulty": "1-4 hours"},
+    {"instance_id": "django__django-11179", "base_commit": "19fc6376ce67d01ca37a91ef2f55ef769f50513a", "rank_offset": 59, "difficulty": "<15 min fix"},
+    {"instance_id": "django__django-11206", "base_commit": "571ab44e8a8936014c22e7eebe4948d9611fd7ce", "rank_offset": 62, "difficulty": "15 min - 1 hour"},
+    {"instance_id": "django__django-11211", "base_commit": "ba726067604ce5a8ca3919edf653496722b433ab", "rank_offset": 63, "difficulty": "15 min - 1 hour"},
+    {"instance_id": "django__django-11095", "base_commit": "7d49ad76562e8c0597a0eb66046ab423b12888d8", "rank_offset": 79, "difficulty": "15 min - 1 hour"},
+    {"instance_id": "django__django-11087", "base_commit": "8180ffba21bf10f4be905cb0d4890dc2bcff2788", "rank_offset": 81, "difficulty": "15 min - 1 hour"},
+    {"instance_id": "django__django-11239", "base_commit": "d87bd29c4f8dfcdf3f4a4eb8340e6770a2416fe3", "rank_offset": 84, "difficulty": "<15 min fix"}
+  ]
+}
