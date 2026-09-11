@@ -361,6 +361,9 @@ class HttpResponseTests(unittest.TestCase):
         r = HttpResponse(12345)
         self.assertEqual(r.content, b'12345')
 
+        r = HttpResponse(memoryview(b'12345'))
+        self.assertEqual(r.content, b'12345')
+
         # test content via property
         r = HttpResponse()
         r.content = 12345

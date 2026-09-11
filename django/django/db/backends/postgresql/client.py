@@ -24,6 +24,10 @@ class DatabaseClient(BaseDatabaseClient):
             args += ['-h', host]
         if port:
             args += ['-p', str(port)]
+        for option in ('sslmode', 'sslrootcert', 'sslcert', 'sslkey'):
+            value = conn_params.get(option)
+            if value:
+                args += ['--{}={}'.format(option, value)]
         args += [dbname]
 
         sigint_handler = signal.getsignal(signal.SIGINT)

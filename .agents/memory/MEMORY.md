@@ -1,0 +1,1 @@
+- [Python 3.12 test limitation](python312-django3.md) — the fixed Django 3.0 snapshot needs an older runtime for its complete test runner.

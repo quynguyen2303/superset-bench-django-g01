@@ -582,7 +582,7 @@ class ModelAdmin(BaseModelAdmin):
 
     def get_inline_instances(self, request, obj=None):
         inline_instances = []
-        for inline_class in self.inlines:
+        for inline_class in self.get_inlines(request, obj):
             inline = inline_class(self.model, self.admin_site)
             if request:
                 if not (inline.has_view_or_change_permission(request, obj) or
@@ -594,6 +594,12 @@ class ModelAdmin(BaseModelAdmin):
             inline_instances.append(inline)
 
         return inline_instances
+
+    def get_inlines(self, request, obj=None):
+        """
+        Return a list of inline classes to be used in the admin form.
+        """
+        return self.inlines
 
     def get_urls(self):
         from django.urls import path
@@ -2113,30 +2119,27 @@ class InlineModelAdmin(BaseModelAdmin):
 
     def has_add_permission(self, request, obj):
         if self.opts.auto_created:
-            # We're checking the rights to an auto-created intermediate model,
-            # which doesn't have its own individual permissions. The user needs
-            # to have the view permission for the related model in order to
-            # be able to do anything with the intermediate model.
-            return self.has_view_permission(request, obj)
+            return self._has_target_model_change_permission(request)
         return super().has_add_permission(request)
 
     def has_change_permission(self, request, obj=None):
         if self.opts.auto_created:
-            # We're checking the rights to an auto-created intermediate model,
-            # which doesn't have its own individual permissions. The user needs
-            # to have the view permission for the related model in order to
-            # be able to do anything with the intermediate model.
-            return self.has_view_permission(request, obj)
+            return self._has_target_model_change_permission(request)
         return super().has_change_permission(request)
 
     def has_delete_permission(self, request, obj=None):
         if self.opts.auto_created:
-            # We're checking the rights to an auto-created intermediate model,
-            # which doesn't have its own individual permissions. The user needs
-            # to have the view permission for the related model in order to
-            # be able to do anything with the intermediate model.
-            return self.has_view_permission(request, obj)
+            return self._has_target_model_change_permission(request)
         return super().has_delete_permission(request, obj)
+
+    def _has_target_model_change_permission(self, request):
+        opts = self.opts
+        for field in opts.fields:
+            if field.remote_field and field.remote_field.model != self.parent_model:
+                opts = field.remote_field.model._meta
+                break
+        codename = get_permission_codename('change', opts)
+        return request.user.has_perm('%s.%s' % (opts.app_label, codename))
 
     def has_view_permission(self, request, obj=None):
         if self.opts.auto_created:

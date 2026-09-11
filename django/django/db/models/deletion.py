@@ -234,7 +234,7 @@ class Collector:
         """
         return related.related_model._base_manager.using(self.using).filter(
             **{"%s__in" % related.field.name: objs}
-        )
+        ).only(related.field.name)
 
     def instances_with_model(self):
         for model, instances in self.data.items():
@@ -277,6 +277,7 @@ class Collector:
             if self.can_fast_delete(instance):
                 with transaction.mark_for_rollback_on_error():
                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
+                instance.pk = None
                 return count, {model._meta.label: count}
 
         with transaction.atomic(using=self.using, savepoint=False):
